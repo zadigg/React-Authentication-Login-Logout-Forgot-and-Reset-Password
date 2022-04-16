@@ -1,31 +1,64 @@
 import axios from "axios";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
+import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 function Login() {
+  const [users, setUsers] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // console.log(email + password);
+  const navigate = useNavigate();
 
-    const data = {
-      email: email,
-      password: password,
-    };
+  useEffect(() => {
+    getData();
+  }, []);
 
-    axios
-      .post("http://localhost:3004/login", data)
+  const getData = async () => {
+    await axios
+      .get("http://localhost:3004/register")
       .then((res) => {
-        console.log(res);
+        // console.log(res);
+        setUsers(res.data);
+        console.log(users);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log(email + password);
+    Object.keys(users).map((key) => {
+      if (users[key].email === email && users[key].password === password) {
+        // return alert("Login Success");
+        return navigate("/dashboard", {
+          state: { id: 1, first_name: users[key].first_name },
+        });
+
+        // first_name: users[key].first_name,
+        // last_name: users[key].last_name,
+        // email: users[key].email
+      } else {
+        return alert("Login Failed");
+      }
+    });
+  };
+
+  // const postRenderer = users.map((user) => {
+  //   return (
+  //     <div key={user.id}>
+  //       {user.id} {user.first_name} {user.email}
+  //     </div>
+  //   );
+  // });
+
   return (
     <div>
+      <div>
+        <Navbar user="" />
+      </div>
       <div className="grid min-h-screen place-items-center">
         <div className="w-11/12 p-12 bg-white sm:w-8/12 md:w-1/2 lg:w-5/12">
           <h1 className="text-xl font-semibold">
@@ -34,7 +67,7 @@ function Login() {
               please fill in your information to continue
             </span>
           </h1>
-          <form onSubmit={handleSubmit} className="mt-6">
+          <form onSubmit={handleSubmit} method="post" className="mt-6">
             <label
               htmlFor="email"
               className="block mt-2 text-xs font-semibold text-gray-600 uppercase"
@@ -61,7 +94,7 @@ function Login() {
               type="password"
               name="password"
               placeholder="********"
-              autoComplete="new-password"
+              autoComplete="password"
               className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
               onChange={(e) => setPassword(e.target.value)}
             />
