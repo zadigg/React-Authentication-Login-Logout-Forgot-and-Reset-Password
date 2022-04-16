@@ -2,7 +2,7 @@
 
 After the authentication i have added some UI interface for music 
 
-![image](https://user-images.githubusercontent.com/62830716/163692483-4b6eecd5-8d5f-411c-842b-18b111e4ba18.png)
+![image](https://user-images.githubusercontent.com/62830716/163692525-e859e055-7f71-4445-8167-73052163b3a0.png)
 
 You have to change the API path to ur own 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
