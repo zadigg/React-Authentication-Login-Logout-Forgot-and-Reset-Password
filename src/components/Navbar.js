@@ -11,7 +11,7 @@ function Navbar({ user }) {
           <div>{user !== "" ? <div>{user}</div> : <div>Login</div>}</div>
         </Link>
         <Link to={user !== "" ? "/" : "/register"}>
-          <div>{user !== "" ? <div>Signout</div> : <div>Register</div>}</div>
+          <div>{user !== "" ? <div>Signout</div> : <div>Register sa</div>}</div>
         </Link>
       </div>
     </div>
